@@ -72,10 +72,10 @@ def buttons():
     for letter in ascii_uppercase:
         ttk.Button(
         hangman,
-        text=letter, width=8,
+        text=letter, width=22,
         command=lambda letter=letter: guess(letter)).grid(row=2+n//9, column=n%9)
         n+=1
-    ttk.Button(hangman, text='QUIT', width=8, command=quits).grid(row=4,column=8)
+    ttk.Button(hangman, text='QUIT', width=22, command=quits).grid(row=4,column=8)
 
 def style():
     global label_word
@@ -89,9 +89,9 @@ def style():
     heading.grid(row=0 , column=0, columnspan=10)
     heading.create_text(400,25, text="", font=('bold', 30))
     label_word=StringVar()
-    top_bit = Canvas(hangman, width=400, height=400)
+    top_bit = Canvas(hangman, width=600, height=400)
     top_bit.grid(row = 0, column=0, columnspan=5, rowspan=2)
-    right_bit = Canvas(hangman, width=500, height=50)
+    right_bit = Canvas(hangman, width=700, height=50)
     right_bit.grid(row = 0, column=4, columnspan=5)
     # right_bit.create_text(230, 50, text='', font=('bold', 20))
 
