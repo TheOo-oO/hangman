@@ -12,7 +12,7 @@ city_list = ['moscow', 'paris', 'sydney', 'london', 'rome', 'toronto', 'seoul', 
 word = random.choice(city_list).upper()
 print(word)
 count_fails = 0 
-print('hi')
+
 def display():
 # Displays underscores on the screen
     global display 
