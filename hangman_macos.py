@@ -8,7 +8,7 @@ hangman = Tk()
 hangman.title("Yao Shen's Hangman Game ;)")
 
 # Randomises the words
-city_list = ['singapore', 'shanghai', 'washington', 'islamabad', 'moscow', 'paris', 'sydney', 'london', 'rome', 'toronto', 'seoul', 'dubai',]
+city_list = ['moscow', 'paris', 'sydney', 'london', 'rome', 'toronto', 'seoul', 'dubai',]
 word = random.choice(city_list).upper()
 print(word)
 count_fails = 0
@@ -65,7 +65,12 @@ def guess(letter):
             move10()
         elif count_fails == 11:
             move11()
-
+            msgbox = messagebox.askquestion(title='You have failed', 
+            message='You have failed! The word was {}. \n Click No to exit program. Click Yes to start a new game.'.format(word))
+            if msgbox == 'yes':
+                print('Do for later')
+            else:
+                quits()
 
 def buttons():
     n = 0
