@@ -1,4 +1,6 @@
 import random
+import sys 
+import os 
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
@@ -7,10 +9,13 @@ from string import ascii_uppercase
 hangman = Tk()
 hangman.title("Yao Shen's Hangman Game ;)")
 
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
 # Randomises the words
 city_list = ['singapore', 'shanghai', 'washington', 'islamabad', 'moscow', 'paris', 'sydney', 'london', 'rome', 'toronto', 'seoul', 'dubai',]
 word = random.choice(city_list).upper()
-print(word)
 count_fails = 0
 
 def display():
@@ -35,7 +40,9 @@ def guess(letter):
                 display[i] = letter
                 label_word.set(" ".join(display))
                 if list(word) == display:
-                    print('YOU ARE AMAZING')
+                    restart_program()
+                else:
+                    quits()
 
     else:
         wrong_letter.extend(letter)
@@ -68,7 +75,7 @@ def guess(letter):
             msgbox = messagebox.askquestion(title='You have failed', 
             message='You have failed! The word was {}. \n Click No to exit program. Click Yes to start a new game.'.format(word))
             if msgbox == 'yes':
-                print('Do for later')
+                restart_program()
             else:
                 quits()
 

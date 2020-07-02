@@ -1,18 +1,25 @@
 import random
+import sys 
+import os 
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from string import ascii_uppercase
 # Creates a playground for Tk
 hangman = Tk()
-hangman.title("Yao Shen's Hangman Game ;)")
+hangman.title("Yao Shen's Hangman Game)")
 
-# Randomises the words
-city_list = ['moscow', 'paris', 'sydney', 'london', 'rome', 'toronto', 'seoul', 'dubai',]
-word = random.choice(city_list).upper()
-print(word)
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+    
 count_fails = 0
+# Randomises the words
+def city_list(): 
+    city_list = ['moscow', 'paris', 'sydney', 'london', 'rome', 'toronto', 'seoul', 'dubai',]
+    return city_list
 
+word = random.choice(city_list()).upper() 
 def display():
 # Displays underscores on the screen
     global display
@@ -22,6 +29,7 @@ def display():
         display[i] = '_'
     Label(hangman, textvariable=label_word, font=("bold", 80)).grid(row=0, column=4, columnspan=5, rowspan=2)
     label_word.set(" ".join(display))
+
 
 def wrong_word():
     global wrong_letter
@@ -36,7 +44,12 @@ def guess(letter):
                 label_word.set(" ".join(display))
                 if list(word) == display:
                     print('YOU ARE AMAZING')
-
+                    msgbox = messagebox.askquestion(title='You got the word!',
+                    message=('Congrulations you got word! Do you want to start a new game?'))
+                    if   msgbox == 'yes':
+                        restart_program()
+                    else:
+                        quits()
     else:
         wrong_letter.extend(letter)
         if count_fails < 11:
@@ -49,7 +62,7 @@ def guess(letter):
             move2()
         elif count_fails == 3:
             move3()
-        elif count_fails == 4:
+        elif count_fails == 4:  
             move4()
         elif count_fails == 5:
             move5()
@@ -65,13 +78,15 @@ def guess(letter):
             move10()
         elif count_fails == 11:
             move11()
-            msgbox = messagebox.askquestion(title='You have failed', 
-            message='You have failed! The word was {}. \n Click No to exit program. Click Yes to start a new game.'.format(word))
+            msgbox = messagebox.askquestion(title='You have failed',
+            message='You have failed! The word was {}. \n Do you want to start a new game?'.format(word))
             if msgbox == 'yes':
                 print('Do for later')
+                restart_program()
             else:
                 quits()
-
+                
+# The buttons 
 def buttons():
     n = 0
     for letter in ascii_uppercase:
@@ -82,6 +97,7 @@ def buttons():
         n+=1
     ttk.Button(hangman, text='QUIT', width=8, command=quits).grid(row=4,column=8)
 
+# GUI canvas etc 
 def style():
     global label_word
     global top_bit
@@ -100,7 +116,7 @@ def style():
     right_bit.grid(row = 0, column=4, columnspan=5)
     # right_bit.create_text(230, 50, text='', font=('bold', 20))
 
-
+# Hangman Graphics 
 def move1():
     top_bit.create_line(25,375,200,375, fill='black', width=7)
 def move2():
@@ -128,11 +144,12 @@ def quits():
     hangman.destroy()
 
 def main():
+    city_list()
     style()
     wrong_word()
     display()
     buttons()
     hangman.mainloop()
-
+    
 if __name__ == "__main__":
     main()
